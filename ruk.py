@@ -1,7 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
+import sys
 
-query = 'cats'
+query = sys.argv[1] if len(sys.argv) > 1 else input('Enter query: ')
 url = f'https://www.kiddle.co/s.php?q={query}'
 
 page = requests.get(url).text
@@ -15,3 +16,7 @@ for raw_img in soup.find_all('img'):
         response = requests.get(link)
         with open("./today_avatar.jpg", "wb") as f:
             f.write(response.content)
+        print('Аватар найден - today_avatar.jpg')
+        break
+    else:
+        print("Аватар не найден")
